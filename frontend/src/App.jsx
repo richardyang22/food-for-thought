@@ -1,19 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [area, setArea] = useState('');
+  const [responseText, setResponseText] = useState('');
 
-  useEffect(() => {
-    // Fetch data from the Flask backend
-    fetch('http://127.0.0.1:5000/api/message')
-      .then(response => response.json())
-      .then(data => setMessage(data.message))
-      .catch(error => console.error("Error fetching data:", error));
-  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission
+
+    // Make a POST request to the Flask backend
+    const response = await fetch('http://127.0.0.1:5000/get_density', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ area: area }),
+    });
+
+    const data = await response.json(); 
+    setResponseText(data.density);
+  };
 
   return (
     <div className="App">
-      <h1>{message}</h1>
+      <h1>Food for Thought</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={area}
+          onChange={(e) => setArea(e.target.value)}
+          placeholder="Enter your area"
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {responseText && <h2>{responseText}</h2>} {/* Display the response */}
     </div>
   );
 }
