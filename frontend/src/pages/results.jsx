@@ -39,6 +39,7 @@ export function ResultsPage() {
 
     const total = data.reduce((acc, curr) => acc + curr.value, 0);
     return (
+        <>
         <div className='results'>
             <h1>Your Carbon Foodprint Results</h1>
             <div className="results-container">
@@ -81,5 +82,6 @@ export function ResultsPage() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
