@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useLocation } from 'react-router-dom';
 import './results.css';
 import axios from 'axios';
 
 export function ResultsPage() {
+    const navigate = useNavigate();
     const { image, responseData } = useLocation().state;
     const [data, setData] = useState([]);
 
-    const options = {
-        method: 'GET',
-        url: 'https://foodprint.p.rapidapi.com/api/foodprint/name/sausage',
-        headers: {
-          'x-rapidapi-key': '8afabbd98cmsha067e90f00cb19bp1834f5jsn7c8639ab1a15',
-          'x-rapidapi-host': 'foodprint.p.rapidapi.com'
-        }
-    };
+    const handleClick = () => {
+        navigate('../');
+    };    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,6 +20,14 @@ export function ResultsPage() {
             try {
                 // Loop through each food class in responseData.classes
                 for (const food of responseData.classes) {
+                    const options = {
+                        method: 'GET',
+                        url: `https://foodprint.p.rapidapi.com/api/foodprint/name/${food}`,
+                        headers: {
+                          'x-rapidapi-key': '0c5073e51cmsh553414bb801bfb7p182e8ejsnc44540977818',
+                          'x-rapidapi-host': 'foodprint.p.rapidapi.com'
+                        }
+                    };
                     const response = await axios.request(options);
                     console.log(response.data);
                     const value = response.data[0].footprint;
@@ -81,6 +86,7 @@ export function ResultsPage() {
                     </table>
                 </div>
             </div>
+            <button onClick={handleClick} id="backbutton">Go Back</button>
         </div>
         </>
     );
