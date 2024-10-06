@@ -4,6 +4,23 @@ import json
 import os
 from clarifai.client.model import Model
 
+def predict0(image_name):
+    model = YOLO("best.pt") 
+    class_names = model.names
+    print(class_names)
+    image = cv2.imread(f"images_in/{image_name}")
+    results = model(image)
+
+    for result in results:
+        detected_classes = set()
+        for result in results:
+            class_ids = result.boxes.cls
+            detected_classes.update(class_ids)
+
+        detected_class_names = [class_names[int(cls)] for cls in detected_classes]
+        detected_class_names = set(detected_class_names)
+        print("Detected Class Names 0:", detected_class_names)
+        return list(detected_class_names)
 
 def predict(image_name):
     with open('classes.json', 'r') as f:
