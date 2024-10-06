@@ -1,14 +1,42 @@
+import React, { useEffect, useState } from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useLocation } from 'react-router-dom';
 import './results.css';
+import axios from 'axios';
 
 export function ResultsPage() {
-    const { image } = useLocation().state;
-    const data = [
-        { label: 'Steak', value: 35 },
-        { label: 'Potatoes', value: 3 },
-        { label: 'Asparagus', value: 2 },
-    ];
+    const { image, responseData } = useLocation().state;
+    const [data, setData] = useState([]);
+
+    const options = {
+        method: 'GET',
+        url: 'https://foodprint.p.rapidapi.com/api/foodprint/name/sausage',
+        headers: {
+          'x-rapidapi-key': '8afabbd98cmsha067e90f00cb19bp1834f5jsn7c8639ab1a15',
+          'x-rapidapi-host': 'foodprint.p.rapidapi.com'
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const results = [];
+            try {
+                // Loop through each food class in responseData.classes
+                for (const food of responseData.classes) {
+                    const response = await axios.request(options);
+                    console.log(response.data);
+                    const value = response.data[0].footprint;
+                    results.push({ label: food, value: value });
+                }
+                setData(results); // Update state with the final data
+            } catch (error) {
+                console.error('Error fetching food values:', error);
+            }
+        };
+
+        fetchData(); // Call the fetch function
+    }, []);
+
     const total = data.reduce((acc, curr) => acc + curr.value, 0);
     return (
         <div className='results'>

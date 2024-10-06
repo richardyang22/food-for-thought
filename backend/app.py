@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
+from model import predict
 
 app = Flask(__name__)
 CORS(app)
@@ -27,7 +28,9 @@ def image():
     if file and allowed_file(file.filename):
         filename = file.filename
         file.save(os.path.join(UPLOAD_FOLDER, filename))  # Save the file
-        return jsonify({'message': 'Image uploaded successfully!', 'file_path': os.path.join(UPLOAD_FOLDER, filename)}), 200
+    
+        detected_class_names = predict(filename)
+        return jsonify({'classes': detected_class_names}), 200
     return jsonify({'error': 'File type not allowed'}), 400
 
 if __name__ == '__main__':

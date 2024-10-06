@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png';
 import './home.css';
-import ImageUpload from './ImageUpload';
 
 export function HomePage() {
     const navigate = useNavigate();
@@ -32,14 +31,13 @@ export function HomePage() {
             if (response.ok) {
                 const responseData = await response.json();
                 console.log('Success:', responseData);
+                navigate('results', { state: { image: file, responseData } });
             } else {
                 console.error('Error uploading image:', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);
         }
-
-        navigate('results', { state: { image: file } });
     };
 
     return (
