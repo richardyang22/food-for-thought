@@ -1,8 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
 .results-container {
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
+    padding: 0px;
+    margin: 0px;
+    width: 100vw;
 }
 
 .legend {
     list-style: none;
+    border-collapse: collapse; 
+}
+
+.legend th,
+.legend td {
+    border: 1px solid #ddd;
+    padding: 8px; 
+    text-align: left; 
+}
+
+.legend th {
+    background-color: #f2f2f2; 
+    font-weight: bold;
+}
+
+.legend tr:nth-child(even) {
+    background-color: #ffffff; /* Optional: add a background color to even rows */
+}
+.legend tr:nth-child(odd) {
+    background-color: #f9f9f9; /* Optional: add a background color to even rows */
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #daeef3;
+    margin: 0px;
+    height: 100vh;
+}
+
+.results h1 {
+    text-align: center;
+    font-family: 'Sora';
 }

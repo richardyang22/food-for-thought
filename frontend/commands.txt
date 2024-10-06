@@ -1,0 +1,14 @@
+python3.7 -m venv Food
+source Food/bin/activate
+pip install torch==1.8.0 # originally 1.8.1
+pip install torchvision==0.9.1
+pip install --upgrade pip
+pip install torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+
+pip install --upgrade pip setuptools wheel
+pip install opencv-python==3.4.2.17
+pip install mmcv-full==1.3.0
+
+pip install git+https://github.com/facebookresearch/segment-anything.git@6fdee8f
+
+pip install -r requirement.txt
