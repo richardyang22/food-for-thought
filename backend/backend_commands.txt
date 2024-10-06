@@ -1,0 +1,7 @@
+python3.12 -m venv yolov8
+
+source yolov8/bin/activate
+
+pip install ultralytics
+
+pip install opencv-python
